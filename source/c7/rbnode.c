@@ -33,7 +33,7 @@ struct c7_rbnode *c7_rbnode_rotr(struct c7_rbnode *node) {
   return n;
 }
 
-bool c7_rbnode_is_red(struct c7_rbnode *node) {
+bool c7_rbnode_red(struct c7_rbnode *node) {
   return node && node->red;
 }
 
@@ -66,7 +66,7 @@ struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
     return node;
   }
   
-  if (c7_rbnode_is_red(node->left) && c7_rbnode_is_red(node->right)) {
+  if (c7_rbnode_red(node->left) && c7_rbnode_red(node->right)) {
     c7_rbnode_flip(node);
   }
 
@@ -81,11 +81,11 @@ struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
     *value = node->value;
   }
 
-  if (c7_rbnode_is_red(node->right) && !c7_rbnode_is_red(node->left)) {
+  if (c7_rbnode_red(node->right) && !c7_rbnode_red(node->left)) {
     node = c7_rbnode_rotl(node);
   }
   
-  if (c7_rbnode_is_red(node->left) && c7_rbnode_is_red(node->left->left)) {
+  if (c7_rbnode_red(node->left) && c7_rbnode_red(node->left->left)) {
     node = c7_rbnode_rotr(node);
   }
 
