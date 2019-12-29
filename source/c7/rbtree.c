@@ -13,23 +13,8 @@ void c7_rbtree_init(struct c7_rbtree *tree,
 void c7_rbtree_deinit(struct c7_rbtree *tree) {
 }
 
-struct c7_rbnode *c7_rbtree_find(struct c7_rbtree *tree, const void *key) {
-  struct c7_rbnode *n = tree->root;
-  
-  while (n) {
-    switch (tree->compare(key, n->value)) {
-    case C7_LT:
-      n = n->left;
-      break;
-    case C7_GT:
-      n = n->right;
-      break;
-    default:
-      return n;
-    }
-  }
-
-  return NULL;
+void *c7_rbtree_find(struct c7_rbtree *tree, const void *key) {
+  return c7_rbnode_find(tree->root, tree, key);
 }
 
 void *c7_rbtree_add(struct c7_rbtree *tree, const void *key) {

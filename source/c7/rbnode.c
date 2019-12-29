@@ -37,6 +37,25 @@ bool c7_rbnode_is_red(struct c7_rbnode *node) {
   return node && node->red;
 }
 
+void *c7_rbnode_find(struct c7_rbnode *node,
+		     struct c7_rbtree *tree,
+		     const void *key) {
+  while (node) {
+    switch (tree->compare(key, node->value)) {
+    case C7_LT:
+      node = node->left;
+      break;
+    case C7_GT:
+      node = node->right;
+      break;
+    default:
+      return node->value;
+    }
+  }
+
+  return NULL;
+}
+
 struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
 				struct c7_rbtree *tree,
 				const void *key,

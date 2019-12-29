@@ -22,6 +22,10 @@ struct c7_rbnode *c7_rbnode_rotr(struct c7_rbnode *node);
 
 bool c7_rbnode_is_red(struct c7_rbnode *node);
 
+void *c7_rbnode_find(struct c7_rbnode *node,
+		     struct c7_rbtree *tree,
+		     const void *key);
+
 struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
 				struct c7_rbtree *tree,
 				const void *key,

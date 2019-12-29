@@ -1,6 +1,8 @@
 * c7_rb_node_do/c7_rb_tree_do macros
 ** left-right depth first
 ** test
+* finish rbtree_deinit
+** add rbpool_put
 * import libceque
 * c7_rbnode_remove
 * c7_rbtree_remove

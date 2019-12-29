@@ -9,13 +9,19 @@ static void rbtree_tests() {
   
   struct c7_rbtree tree;
   c7_rbtree_init(&tree, c7_compare_int, &pool);
-  const int N = 3;
-  int items[] = {2, 1, 3};
+  const int N = 10;
+  int items[] = {9, 1, 2, 3, 5, 4, 6, 7, 8, 0};
 
+  // Insert items
   for (int i = 0; i < N; i++) {
     *(int *)c7_rbtree_add(&tree, items + i) = items[i];
   }
-  
+
+  // Find items
+  for (int i = 0; i < N; i++) {
+    assert(*(int *)c7_rbtree_find(&tree, items + i) == items[i]);
+  }
+
   c7_rbtree_deinit(&tree);
   c7_rbpool_deinit(&pool);
 }

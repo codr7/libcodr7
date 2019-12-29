@@ -18,7 +18,7 @@ void c7_rbtree_init(struct c7_rbtree *tree,
 
 void c7_rbtree_deinit(struct c7_rbtree *tree);
 
-struct c7_rbnode *c7_rbtree_find(struct c7_rbtree *tree, const void *key);
+void *c7_rbtree_find(struct c7_rbtree *tree, const void *key);
 void *c7_rbtree_add(struct c7_rbtree *tree, const void *key);
   
 #endif
