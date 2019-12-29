@@ -22,9 +22,9 @@ struct c7_rbnode *c7_rbnode_rotr(struct c7_rbnode *node);
 
 bool c7_rbnode_is_red(struct c7_rbnode *node);
 
-struct c7_rbnode *c7_rbnode_insert(struct c7_rbnode *node,
-			       struct c7_rbtree *tree,
-			       const void *key,
-			       void **value);
+struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
+				struct c7_rbtree *tree,
+				const void *key,
+				void **value);
 
 #endif

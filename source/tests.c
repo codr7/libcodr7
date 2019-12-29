@@ -8,7 +8,7 @@ enum c7_order compare_int(const void *key, const void *value) {
   return (k < v) ? C7_LT : ((k > v) ? C7_GT : C7_EQ);
 }
 
-int main() {
+static void rbtree_tests() {
   struct c7_rbpool pool;
   c7_rbpool_init(&pool, 32, sizeof(int));
   
@@ -18,10 +18,14 @@ int main() {
   int items[] = {2, 1, 3};
 
   for (int i = 0; i < N; i++) {
-    *(int *)c7_rbtree_insert(&tree, items + i) = items[i];
+    *(int *)c7_rbtree_add(&tree, items + i) = items[i];
   }
   
   c7_rbtree_deinit(&tree);
   c7_rbpool_deinit(&pool);
+}
+
+int main() {
+  rbtree_tests();
   return 0;
 }

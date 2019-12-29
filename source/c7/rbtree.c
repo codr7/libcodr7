@@ -32,9 +32,9 @@ struct c7_rbnode *c7_rbtree_find(struct c7_rbtree *tree, const void *key) {
   return NULL;
 }
 
-void *c7_rbtree_insert(struct c7_rbtree *tree, const void *key) {
+void *c7_rbtree_add(struct c7_rbtree *tree, const void *key) {
   void *v = NULL;
-  tree->root = c7_rbnode_insert(tree->root, tree, key, &v);
+  tree->root = c7_rbnode_add(tree->root, tree, key, &v);
   tree->root->red = false;
   return v;
 }

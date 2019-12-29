@@ -37,10 +37,10 @@ bool c7_rbnode_is_red(struct c7_rbnode *node) {
   return node && node->red;
 }
 
-struct c7_rbnode *c7_rbnode_insert(struct c7_rbnode *node,
-			       struct c7_rbtree *tree,
-			       const void *key,
-			       void **value) {
+struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
+				struct c7_rbtree *tree,
+				const void *key,
+				void **value) {
   if (!node) {
     node = c7_rbpool_get(tree->pool);
     *value = node->value;
@@ -53,10 +53,10 @@ struct c7_rbnode *c7_rbnode_insert(struct c7_rbnode *node,
 
   switch (tree->compare(key, node->value)) {
   case C7_LT:
-    node->left = c7_rbnode_insert(node->left, tree, key, value);
+    node->left = c7_rbnode_add(node->left, tree, key, value);
     break;
   case C7_GT:
-    node->right = c7_rbnode_insert(node->right, tree, key, value);
+    node->right = c7_rbnode_add(node->right, tree, key, value);
     break;
   default:
     *value = node->value;
