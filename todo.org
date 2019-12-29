@@ -1,7 +1,7 @@
-* extract order/compare to compare.h
-* c7_node_do/c7_tree_do macros
+* c7_rb_node_do/c7_rb_tree_do macros
 ** left-right depth first
 ** test
-* c7_node_remove
-* c7_tree_remove
+* import libceque
+* c7_rbnode_remove
+* c7_rbtree_remove
 
