@@ -91,3 +91,11 @@ struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
 
   return node;
 }
+
+bool c7_rbnode_while(struct c7_rbnode *node, c7_predicate_t fn, void *arg) {
+  return node
+    ? c7_rbnode_while(node->left, fn, arg) &&
+    fn(node->value, arg) &&
+    c7_rbnode_while(node->right, fn, arg)
+    : true;
+}

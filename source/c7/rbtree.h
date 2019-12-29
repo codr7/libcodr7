@@ -20,5 +20,6 @@ void c7_rbtree_deinit(struct c7_rbtree *tree);
 
 void *c7_rbtree_find(struct c7_rbtree *tree, const void *key);
 void *c7_rbtree_add(struct c7_rbtree *tree, const void *key);
+bool c7_rbtree_while(struct c7_rbtree *tree, c7_predicate_t fn, void *arg);
   
 #endif

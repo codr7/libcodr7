@@ -3,6 +3,7 @@
 
 #include <inttypes.h>
 #include <stdbool.h>
+#include "c7/compare.h"
 #include "c7/list.h"
 
 struct c7_rbtree;
@@ -30,5 +31,7 @@ struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
 				struct c7_rbtree *tree,
 				const void *key,
 				void **value);
+
+bool c7_rbnode_while(struct c7_rbnode *node, c7_predicate_t fn, void *arg);
 
 #endif
