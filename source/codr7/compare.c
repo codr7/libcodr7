@@ -1,5 +1,5 @@
 #include <string.h>
-#include "c7/compare.h"
+#include "codr7/compare.h"
 
 enum c7_order c7_compare_int(const void *x, const void *y) {
   int xi = *(const int *)x, yi = *(const int *)y;

@@ -1,7 +1,7 @@
 #ifndef C7_LIST_H
 #define C7_LIST_H
 
-#include "c7/utils.h"
+#include "codr7/utils.h"
 
 #define _c7_list_do(l, i, _next)			\
   for (struct c7_list *i = (l)->next, *_next = i->next;	\

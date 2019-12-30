@@ -1,6 +1,6 @@
-#include "c7/rbnode.h"
-#include "c7/rbpool.h"
-#include "c7/rbslab.h"
+#include "codr7/rbnode.h"
+#include "codr7/rbpool.h"
+#include "codr7/rbslab.h"
 
 void c7_rbpool_init(struct c7_rbpool *pool,
 		    uint16_t slab_size, uint16_t value_size) {

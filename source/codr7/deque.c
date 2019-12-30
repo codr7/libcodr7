@@ -1,7 +1,7 @@
-#include "c7/deque.h"
-#include "c7/dqpool.h"
-#include "c7/dqslab.h"
-#include "c7/utils.h"
+#include "codr7/deque.h"
+#include "codr7/dqpool.h"
+#include "codr7/dqslab.h"
+#include "codr7/utils.h"
 
 void c7_deque_init(struct c7_deque *deque, struct c7_dqpool *pool) {
   deque->pool = pool;

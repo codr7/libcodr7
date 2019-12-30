@@ -1,6 +1,6 @@
 #include <stddef.h>
-#include "c7/rbnode.h"
-#include "c7/rbtree.h"
+#include "codr7/rbnode.h"
+#include "codr7/rbtree.h"
 
 void c7_rbtree_init(struct c7_rbtree *tree, 
 		    c7_compare_t compare,

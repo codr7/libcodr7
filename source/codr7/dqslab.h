@@ -2,7 +2,7 @@
 #define C7_DQSLAB_H
 
 #include <stdint.h>
-#include "c7/list.h"
+#include "codr7/list.h"
 
 #define _c7_dqslab_do(b, p, i, _back)				\
   for (void *i = (b)->items + (b)->front * (p)->item_size,	\

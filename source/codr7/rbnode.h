@@ -3,8 +3,8 @@
 
 #include <inttypes.h>
 #include <stdbool.h>
-#include "c7/compare.h"
-#include "c7/list.h"
+#include "codr7/compare.h"
+#include "codr7/list.h"
 
 struct c7_rbtree;
 

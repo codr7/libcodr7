@@ -1,7 +1,7 @@
 #include <stddef.h>
-#include "c7/rbnode.h"
-#include "c7/rbpool.h"
-#include "c7/rbtree.h"
+#include "codr7/rbnode.h"
+#include "codr7/rbpool.h"
+#include "codr7/rbtree.h"
 
 struct c7_rbnode *c7_rbnode_init(struct c7_rbnode *node) {
   node->left = node->right = NULL;

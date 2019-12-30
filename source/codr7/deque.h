@@ -1,8 +1,8 @@
 #ifndef C7_DEQUE_H
 #define C7_DEQUE_H
 
-#include "c7/dqslab.h"
-#include "c7/list.h"
+#include "codr7/dqslab.h"
+#include "codr7/list.h"
 
 #define _c7_deque_do(d, i, _slab)					\
   c7_list_do(&(d)->slabs, _slab)					\

@@ -2,7 +2,7 @@
 #define C7_DQPOOL_H
 
 #include <stdint.h>
-#include "c7/list.h"
+#include "codr7/list.h"
 
 struct c7_dqslab;
 

@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "c7/rbslab.h"
-#include "c7/rbpool.h"
+#include "codr7/rbslab.h"
+#include "codr7/rbpool.h"
 
 struct c7_rbslab *c7_rbslab_new(struct c7_rbpool *pool) {
   struct c7_rbslab *slab = malloc(sizeof(struct c7_rbslab) +

@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "c7/dqpool.h"
-#include "c7/dqslab.h"
-#include "c7/utils.h"
+#include "codr7/dqpool.h"
+#include "codr7/dqslab.h"
+#include "codr7/utils.h"
 
 void c7_dqpool_init(struct c7_dqpool *pool,
 		  uint16_t slab_size, uint16_t item_size) {

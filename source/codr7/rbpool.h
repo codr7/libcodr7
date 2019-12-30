@@ -2,7 +2,7 @@
 #define C7_RBPOOL_H
 
 #include <inttypes.h>
-#include "c7/list.h"
+#include "codr7/list.h"
 
 struct c7_rbpool {
   uint16_t slab_size, node_size;

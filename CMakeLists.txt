@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(libc7)
+project(libcodr7)
 add_compile_options(-std=c99 -Wall -Werror -O2 -g)
 
-file(GLOB_RECURSE sources source/c7/*.c)
+file(GLOB_RECURSE sources source/codr7/*.c)
 
 add_library(lib_static STATIC ${sources})
-set_target_properties(lib_static PROPERTIES OUTPUT_NAME c7)
+set_target_properties(lib_static PROPERTIES OUTPUT_NAME codr7)
 target_include_directories(lib_static PUBLIC source/)
 
 add_executable(tests ${sources} source/tests.c)
 target_include_directories(tests PUBLIC source/)
 
-file(GLOB headers source/c7/*.h)
-install(FILES ${headers} DESTINATION include/c7)
+file(GLOB headers source/codr7/*.h)
+install(FILES ${headers} DESTINATION include/codr7)
 
-install(FILES build/libc7.a DESTINATION lib)
+install(FILES build/libcodr7.a DESTINATION lib)
 

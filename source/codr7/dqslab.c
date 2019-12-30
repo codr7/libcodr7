@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "c7/dqslab.h"
-#include "c7/dqpool.h"
+#include "codr7/dqslab.h"
+#include "codr7/dqpool.h"
 
 struct c7_dqslab *c7_dqslab_new(struct c7_dqpool *pool) {
   return c7_dqslab_init(malloc(sizeof(struct c7_dqslab) +

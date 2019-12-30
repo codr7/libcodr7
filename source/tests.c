@@ -1,9 +1,9 @@
 #include <assert.h>
 #include <stdio.h>
-#include "c7/deque.h"
-#include "c7/dqpool.h"
-#include "c7/rbpool.h"
-#include "c7/rbtree.h"
+#include "codr7/deque.h"
+#include "codr7/dqpool.h"
+#include "codr7/rbpool.h"
+#include "codr7/rbtree.h"
 
 static void deque_tests() {
   const int SLAB_SIZE = 32, N = 1024;
