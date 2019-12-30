@@ -1,5 +1,5 @@
 ### setup
-[libcodr7](https://github.com/codr7/libcodr7) requires a C99 compiler and CMake to build.
+[libcodr7](https://github.com/codr7/libcodr7) requires a C11 compiler and CMake to build.
 
 ```
 $ git clone https://github.com/codr7/libcodr7.git

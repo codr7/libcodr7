@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "codr7/deque.h"
 #include "codr7/dqpool.h"
+#include "codr7/rbnode.h"
 #include "codr7/rbpool.h"
 #include "codr7/rbtree.h"
 

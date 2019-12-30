@@ -3,6 +3,9 @@
 
 #include <stddef.h>
 
+#define c7_align(base, size)			\
+  ((base) + size - ((ptrdiff_t)(base)) % size)
+
 #define c7_baseof(p, t, m)			\
   ((t *)((char *)(p) - offsetof(t, m)))
 

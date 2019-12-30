@@ -5,7 +5,13 @@
 void c7_rbpool_init(struct c7_rbpool *pool,
 		    uint16_t slab_size, uint16_t value_size) {
   pool->slab_size = slab_size;
-  pool->node_size = sizeof(struct c7_rbnode) + value_size;
+
+  pool->node_size =
+    sizeof(struct c7_rbnode) +
+    _Alignof(struct c7_rbnode) +
+    value_size +
+    _Alignof(max_align_t);
+  
   c7_list_init(&pool->slabs);
   c7_list_init(&pool->nodes);
   c7_rbslab_new(pool);

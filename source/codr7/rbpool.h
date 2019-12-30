@@ -10,7 +10,8 @@ struct c7_rbpool {
 };
 
 void c7_rbpool_init(struct c7_rbpool *pool,
-		    uint16_t slab_size, uint16_t value_size);
+		    uint16_t slab_size,
+		    uint16_t value_size);
 
 void c7_rbpool_deinit(struct c7_rbpool *pool);
 
