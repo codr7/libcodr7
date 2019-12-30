@@ -15,4 +15,6 @@
 #define c7_unique(x)				\
   c7_id(x, __COUNTER__)
 
+char *c7_strdup(const char *in);
+
 #endif
