@@ -1,6 +1,5 @@
 * finish rbtree_deinit
 ** add rbpool_put
-* import libceque
 * c7_rbnode_remove
 * c7_rbtree_remove
 

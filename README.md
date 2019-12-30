@@ -11,6 +11,9 @@ $ sudo make install
 $ valgrind ./tests
 ```
 
+### list ([h](https://github.com/codr7/libc7/blob/master/source/c7/list.h)/[c](https://github.com/codr7/libc7/blob/master/source/c7/list.c))
+A double linked embedded linked list that allows reducing the number of allocations by embedding links into items. Since one set of links is needed for each collection, the maxiumum number of collections an item is placed in simultaneously needs to be static.
+
 ### usage
 The only example that exists at the moment is the commented [test suite](https://github.com/codr7/libc7/blob/master/source/tests.c).
 
