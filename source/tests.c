@@ -1,7 +1,60 @@
 #include <assert.h>
 #include <stdio.h>
+#include "c7/deque.h"
+#include "c7/dqpool.h"
 #include "c7/rbpool.h"
 #include "c7/rbtree.h"
+
+static void deque_tests() {
+  const int SLAB_SIZE = 32, N = 1024;
+
+  struct c7_dqpool pool;
+  c7_dqpool_init(&pool, SLAB_SIZE, sizeof(int));
+  
+  struct c7_deque deque;
+  c7_deque_init(&deque, &pool);
+
+  // Push first half in reverse to front
+  for (int i = 0; i < N / 2; i++) {
+    *(int *)c7_deque_push_front(&deque) = N / 2 - i - 1;
+  }
+
+  // Push second half to back
+  for (int i = N / 2; i < N; i++) {
+    *(int *)c7_deque_push_back(&deque) = i;
+  }
+
+  assert(deque.count == N);
+  
+  // Random access
+  for (int i = 0; i < N; i++) {
+    assert(*(int *)c7_deque_get(&deque, i) == i);
+  }
+
+  // Pop first quarter from front
+  for (int i = 0; i < N / 4; i++) {
+    assert(*(int *)c7_deque_front(&deque) == i);
+    c7_deque_pop_front(&deque);
+  }
+
+  // Pop last quarter from back
+  for (int i = 0; i < N / 4; i++) {
+    assert(*(int *)c7_deque_back(&deque) == N - i - 1);
+    c7_deque_pop_back(&deque);
+  }
+
+  assert(deque.count == N / 2);
+
+  // Loop remaining
+  int i = N / 4;
+
+  c7_deque_do(&deque, p) {
+    assert(*(int *)p == i++); 
+  }
+
+  c7_deque_deinit(&deque);
+  c7_dqpool_deinit(&pool);
+}
 
 static bool fn(void *value, void *expected) {
   assert(*(int *)value == (*(int *)expected)++);
@@ -9,12 +62,13 @@ static bool fn(void *value, void *expected) {
 }
 
 static void rbtree_tests() {
+  const int SLAB_SIZE = 32, N = 10;
+
   struct c7_rbpool pool;
-  c7_rbpool_init(&pool, 32, sizeof(int));
+  c7_rbpool_init(&pool, SLAB_SIZE, sizeof(int));
   
   struct c7_rbtree tree;
   c7_rbtree_init(&tree, c7_compare_int, &pool);
-  const int N = 10;
   int items[] = {9, 1, 2, 3, 5, 4, 6, 7, 8, 0};
 
   // Insert items
@@ -37,6 +91,7 @@ static void rbtree_tests() {
 }
 
 int main() {
+  deque_tests();
   rbtree_tests();
   return 0;
 }
