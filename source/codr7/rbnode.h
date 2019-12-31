@@ -16,6 +16,8 @@ struct c7_rbnode {
 };
 
 struct c7_rbnode *c7_rbnode_init(struct c7_rbnode *node);
+void c7_rbnode_deinit(struct c7_rbnode *node, struct c7_rbtree *tree);
+
 uint8_t *c7_rbnode_value(struct c7_rbnode *node);
 
 void c7_rbnode_flip(struct c7_rbnode *node);

@@ -72,10 +72,17 @@ static void rbtree_tests() {
   c7_rbtree_init(&tree, c7_compare_int, &pool);
   int items[] = {9, 1, 2, 3, 5, 4, 6, 7, 8, 0};
 
-  // Insert items
+  // Add items
   for (int i = 0; i < N; i++) {
     *(int *)c7_rbtree_add(&tree, items + i) = items[i];
   }
+
+  // Try adding duplicates
+  for (int i = 0; i < N; i++) {
+    assert(!c7_rbtree_add(&tree, items + i));
+  }
+
+  assert(tree.count == N);
 
   // Find items
   for (int i = 0; i < N; i++) {
@@ -86,8 +93,11 @@ static void rbtree_tests() {
   int i = 0;
   assert(c7_rbtree_while(&tree, fn, &i));
   assert(i == N);
+
+  // Clear
+  c7_rbtree_clear(&tree);
+  assert(!tree.count);
   
-  c7_rbtree_deinit(&tree);
   c7_rbpool_deinit(&pool);
 }
 

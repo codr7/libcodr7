@@ -1,5 +1,5 @@
-* finish rbtree_deinit
-** add rbpool_put
 * c7_rbtree_remove
 ** c7_rbnode_remove
-
+* add c7_vector
+** vpool
+* add c7_vset

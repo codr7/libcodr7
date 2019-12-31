@@ -16,5 +16,6 @@ void c7_rbpool_init(struct c7_rbpool *pool,
 void c7_rbpool_deinit(struct c7_rbpool *pool);
 
 struct c7_rbnode *c7_rbpool_get(struct c7_rbpool *pool);
-
+void c7_rbpool_put(struct c7_rbpool *pool, struct c7_rbnode *node);
+		   
 #endif

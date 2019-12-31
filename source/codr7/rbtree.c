@@ -8,9 +8,15 @@ void c7_rbtree_init(struct c7_rbtree *tree,
   tree->compare = compare;
   tree->pool = pool;
   tree->root = NULL;
+  tree->count = 0;
 }
 
-void c7_rbtree_deinit(struct c7_rbtree *tree) {
+void c7_rbtree_clear(struct c7_rbtree *tree) {
+  if (tree->root) {
+    c7_rbnode_deinit(tree->root, tree);
+    tree->root = NULL;
+    tree->count = 0;
+  }
 }
 
 void *c7_rbtree_find(struct c7_rbtree *tree, const void *key) {

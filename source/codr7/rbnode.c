@@ -9,6 +9,27 @@ struct c7_rbnode *c7_rbnode_init(struct c7_rbnode *node) {
   return node;
 }
 
+void c7_rbnode_deinit(struct c7_rbnode *node, struct c7_rbtree *tree) {
+  struct c7_list queue;
+  c7_list_init(&queue);
+  c7_list_insert(&queue, &node->list);
+
+  while (queue.next != &queue) {
+    node = c7_baseof(queue.next, struct c7_rbnode, list);
+    c7_list_remove(&node->list);
+    
+    if (node->left) {
+      c7_list_insert(&queue, &node->left->list);
+    }
+
+    if (node->right) {
+      c7_list_insert(&queue, &node->right->list);
+    }
+  
+    c7_rbpool_put(tree->pool, node);
+  }
+}
+
 uint8_t *c7_rbnode_value(struct c7_rbnode *node) {
   return c7_align(node->value, _Alignof(max_align_t));
 }
@@ -67,6 +88,7 @@ struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
   if (!node) {
     node = c7_rbpool_get(tree->pool);
     *value = c7_rbnode_value(node);
+    tree->count++;
     return node;
   }
   
@@ -82,7 +104,7 @@ struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
     node->right = c7_rbnode_add(node->right, tree, key, value);
     break;
   default:
-    *value = c7_rbnode_value(node);
+    return node;
   }
 
   if (c7_rbnode_red(node->right) && !c7_rbnode_red(node->left)) {

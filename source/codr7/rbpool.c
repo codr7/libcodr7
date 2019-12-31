@@ -42,3 +42,7 @@ struct c7_rbnode *c7_rbpool_get(struct c7_rbpool *pool) {
   
   return c7_rbnode_init(n);
 }
+
+void c7_rbpool_put(struct c7_rbpool *pool, struct c7_rbnode *node) {
+  c7_list_insert(&pool->nodes, &node->list);
+}
