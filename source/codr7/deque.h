@@ -18,8 +18,7 @@ struct c7_deque {
 };
 
 void c7_deque_init(struct c7_deque *deque, struct c7_dqpool *pool);
-void c7_deque_deinit(struct c7_deque *deque);
-
+void c7_deque_clear(struct c7_deque *deque);
 void *c7_deque_get(struct c7_deque *deque, uint64_t i);
 
 void *c7_deque_front(struct c7_deque *deque);

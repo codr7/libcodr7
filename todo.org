@@ -1,3 +1,4 @@
+* make c7_rbtree_while iterative like clear
 * c7_rbtree_remove
 ** c7_rbnode_remove
 * add c7_vector

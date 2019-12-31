@@ -53,7 +53,10 @@ static void deque_tests() {
     assert(*(int *)p == i++); 
   }
 
-  c7_deque_deinit(&deque);
+  // Clear
+  c7_deque_clear(&deque);
+  assert(!deque.count);
+  
   c7_dqpool_deinit(&pool);
 }
 

@@ -9,10 +9,12 @@ void c7_deque_init(struct c7_deque *deque, struct c7_dqpool *pool) {
   deque->count = 0;
 }
 
-void c7_deque_deinit(struct c7_deque *deque) {
+void c7_deque_clear(struct c7_deque *deque) {
   c7_list_do(&deque->slabs, b) {
     c7_dqpool_put(deque->pool, c7_baseof(b, struct c7_dqslab, list));
   }
+
+  deque->count = 0;
 }
 
 void *c7_deque_get(struct c7_deque *deque, uint64_t i) {
