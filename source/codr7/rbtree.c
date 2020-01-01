@@ -30,6 +30,13 @@ void *c7_rbtree_add(struct c7_rbtree *tree, const void *key) {
   return v;
 }
 
+void *c7_rbtree_remove(struct c7_rbtree *tree, const void *key) {
+  void *v = NULL;
+  tree->root = c7_rbnode_remove(tree->root, tree, key, &v);
+  tree->root->red = false;
+  return v;
+}
+
 bool c7_rbtree_while(struct c7_rbtree *tree, c7_predicate_t fn, void *arg) {
   return c7_rbnode_while(tree->root, fn, arg);
 }
