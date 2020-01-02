@@ -1,5 +1,5 @@
-* c7_channel
-** C11 threads
-** store in deque
+* c7_chan
+** put/get
+** atomic wait
 * make c7_rbtree_while iterative like clear
 
