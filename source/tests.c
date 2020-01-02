@@ -99,7 +99,6 @@ static void rbtree_tests() {
 
   // Remove first half
   for (int i = 0; i < N / 2; i++) {
-    printf("remove: %d\n", items[i]);
     assert(*(int *)c7_rbtree_remove(&tree, items + i) == items[i]);
   }
 
@@ -107,7 +106,6 @@ static void rbtree_tests() {
 
   // Find remaining items
   for (int i = N / 2; i < N; i++) {
-    printf("find remaining: %d\n", items[i]);
     assert(*(int *)c7_rbtree_find(&tree, items + i) == items[i]);
   }
 
