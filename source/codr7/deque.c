@@ -14,6 +14,7 @@ void c7_deque_clear(struct c7_deque *deque) {
     c7_dqpool_put(deque->pool, c7_baseof(b, struct c7_dqslab, list));
   }
 
+  c7_list_init(&deque->slabs);
   deque->count = 0;
 }
 
@@ -61,7 +62,7 @@ void c7_deque_pop_front(struct c7_deque *deque) {
 
 void *c7_deque_back(struct c7_deque *deque) {
   return c7_dqslab_back(c7_baseof(deque->slabs.prev, struct c7_dqslab, list),
-		       deque->pool);
+			deque->pool);
 }
 
 void *c7_deque_push_back(struct c7_deque *deque) {

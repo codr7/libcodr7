@@ -1,4 +1,5 @@
+* c7_channel
+** C11 threads
+** store in deque
 * make c7_rbtree_while iterative like clear
-* add c7_vector
-** vpool
-* add c7_vset
+
