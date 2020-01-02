@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
+#include "codr7/channel.h"
 #include "codr7/deque.h"
 #include "codr7/dqpool.h"
 #include "codr7/rbnode.h"
@@ -116,8 +117,18 @@ static void rbtree_tests() {
   c7_rbpool_deinit(&pool);
 }
 
+void channel_tests() {
+  const int SLAB_SIZE = 32;
+  struct c7_dqpool pool;
+  c7_dqpool_init(&pool, SLAB_SIZE, sizeof(int));
+  struct c7_channel channel;
+  c7_channel_init(&channel, &pool);
+  c7_dqpool_deinit(&pool);
+}
+
 int main() {
   deque_tests();
   rbtree_tests();
+  channel_tests();
   return 0;
 }

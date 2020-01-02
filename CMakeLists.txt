@@ -12,7 +12,7 @@ target_include_directories(lib_static PUBLIC source/)
 add_executable(tests ${sources} source/tests.c)
 add_compile_options(tests -fsanitize=undefined)
 target_include_directories(tests PUBLIC source/)
-target_link_libraries(tests ubsan)
+target_link_libraries(tests pthread ubsan)
 
 file(GLOB headers source/codr7/*.h)
 install(FILES ${headers} DESTINATION include/codr7)
