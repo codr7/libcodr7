@@ -12,13 +12,16 @@ $ valgrind ./tests
 ```
 
 ### list ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/list.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/list.c))
-An intrusive, double linked list. Since one set of links is needed for each list, the maxiumum number of lists an item is placed in simultaneously needs to be static.
+Intrusive, double linked list. Since one set of links is needed for each list, the maxiumum number of lists an item is placed in simultaneously needs to be static.
 
 ### deque ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/deque.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/deque.c))
-A deque with value semantics and pool allocated items.
+Deque with value semantics and pool allocated items.
 
 ### rbtree ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/rbtree.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/rbtree.c))
-A [left leaning red/black tree](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=2ahUKEwj8zeD6593mAhUxNOwKHcKlAW0QFjABegQIBBAC&url=https%3A%2F%2Fwww.cs.princeton.edu%2F~rs%2Ftalks%2FLLRB%2FLLRB.pdf&usg=AOvVaw0aj5xOszrudCcAFIuVqngg) with value semantics and pool allocated items.
+[Left leaning red/black tree](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=2ahUKEwj8zeD6593mAhUxNOwKHcKlAW0QFjABegQIBBAC&url=https%3A%2F%2Fwww.cs.princeton.edu%2F~rs%2Ftalks%2FLLRB%2FLLRB.pdf&usg=AOvVaw0aj5xOszrudCcAFIuVqngg) with value semantics and pool allocated items.
+
+### chan ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/chan.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/chan.c))
+Thread safe channel based on C11 threads using [deque](https://github.com/codr7/libcodr7#deque-hc) for storage.
 
 ### examples
 Besides the commented [test suite](https://github.com/codr7/libcodr7/blob/master/source/tests.c), you may find a real world example [here](https://github.com/codr7/cfoo/tree/master/source/cfoo).

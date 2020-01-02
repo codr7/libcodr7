@@ -1,5 +1,4 @@
-* c7_chan
-** put/get
-** atomic wait
+* add optional timeout to c7_chan_get_lock
+* convert chan test to benchmark
+* add fast path using atomic spinlock to c7_chan
 * make c7_rbtree_while iterative like clear
-
