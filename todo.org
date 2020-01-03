@@ -1,4 +1,3 @@
-* add bench/chan.go
 * add fast path using atomic spinlock to c7_chan
 * add c7_chsink
 ** cond, mutex & chan fields

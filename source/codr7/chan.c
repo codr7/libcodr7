@@ -80,10 +80,11 @@ void *c7_chan_put_lock(struct c7_chan *chan, const struct timespec *deadline) {
     return NULL;
   }
 
-  if (chan->queue_max &&
-      chan->queue.count >= chan->queue_max &&
-      !wait(&chan->get, &chan->mutex, deadline)) {
+  while (chan->queue_max &&
+	 chan->queue.count >= chan->queue_max) {
+    if (!wait(&chan->get, &chan->mutex, deadline)) {
       return NULL;
+    }
   }
   
   return c7_deque_push_back(&chan->queue);
@@ -106,8 +107,10 @@ void *c7_chan_get_lock(struct c7_chan *chan, const struct timespec *deadline) {
     return NULL;
   }
   
-  if (!chan->queue.count && !wait(&chan->put, &chan->mutex, deadline)) {
-    return NULL;
+  while (!chan->queue.count) {
+    if (!wait(&chan->put, &chan->mutex, deadline)) {
+      return NULL;
+    }
   }
 
   return c7_deque_front(&chan->queue);
@@ -116,12 +119,14 @@ void *c7_chan_get_lock(struct c7_chan *chan, const struct timespec *deadline) {
 void c7_chan_get_unlock(struct c7_chan *chan) {
   c7_deque_pop_front(&chan->queue);
   int result = thrd_error;
+
+  bool signal_get = chan->queue.count < chan->queue_max;
   
   if ((result = mtx_unlock(&chan->mutex)) != thrd_success) {
     c7_error("Failed unlocking mutex: %d", result);
   }
 
-  if (chan->queue_max && (result = cnd_signal(&chan->get)) != thrd_success) {
+  if (signal_get && (result = cnd_signal(&chan->get)) != thrd_success) {
     c7_error("Failed signalling get: %d", result);
   }
 }
