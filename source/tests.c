@@ -142,13 +142,10 @@ static int chan_fn2(void *_chan) {
 }
 
 void chan_tests() {
-  const int SLAB_SIZE = 32, QUEUE_MAX = 64;
+  const int QUEUE_MAX = 64;
   
-  struct c7_dqpool pool;
-  c7_dqpool_init(&pool, SLAB_SIZE, sizeof(uint64_t));
-
   struct c7_chan chan;
-  c7_chan_init(&chan, &pool, QUEUE_MAX);
+  c7_chan_init(&chan, sizeof(uint64_t), QUEUE_MAX);
 
   struct c7_timer t;
   c7_timer_reset(&t);
@@ -167,7 +164,6 @@ void chan_tests() {
 
   printf("chan: %" PRIu64 "us\n", c7_timer_usecs(&t));
   c7_chan_deinit(&chan);
-  c7_dqpool_deinit(&pool);
 }
 
 int main() {  

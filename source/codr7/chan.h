@@ -2,9 +2,14 @@
 #define C7_CHAN_H
 
 #include <threads.h>
+
 #include "codr7/deque.h"
+#include "codr7/dqpool.h"
+
+#define C7_CHAN_SLAB_SIZE 32
 
 struct c7_chan {
+  struct c7_dqpool queue_pool;
   struct c7_deque queue;
   uint64_t queue_max;
   
@@ -12,10 +17,7 @@ struct c7_chan {
   cnd_t put, get;
 };
 
-void c7_chan_init(struct c7_chan *chan,
-		  struct c7_dqpool *pool,
-		  uint64_t queue_max);
-
+void c7_chan_init(struct c7_chan *chan, uint16_t item_size, uint64_t queue_max);
 void c7_chan_deinit(struct c7_chan *chan);
 
 void *c7_chan_put_lock(struct c7_chan *chan, const struct timespec *deadline);
