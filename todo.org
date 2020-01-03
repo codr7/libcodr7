@@ -1,5 +1,4 @@
-* fix chan bench
-* add Go bench
+* add bench/chan.go
 * add optional timeout to c7_chan_get_lock
 * add fast path using atomic spinlock to c7_chan
 * add c7_chsink
