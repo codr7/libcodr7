@@ -122,7 +122,7 @@ static void rbtree_tests() {
 static int chan_fn1(void *_chan) {
   struct c7_chan *chan = _chan;
 
-  for (uint64_t i = 0; i < 1024; i++) {
+  for (uint64_t i = 0; i < 1000000; i++) {
     *(uint64_t *)c7_chan_put_lock(chan, NULL) = i;
     c7_chan_put_unlock(chan);
   }
@@ -133,7 +133,7 @@ static int chan_fn1(void *_chan) {
 static int chan_fn2(void *_chan) {
   struct c7_chan *chan = _chan;
 
-  for (uint64_t i = 0; i < 1024; i++) {
+  for (uint64_t i = 0; i < 1000000; i++) {
     assert(*(uint64_t *)c7_chan_get_lock(chan, NULL) == i);
     c7_chan_get_unlock(chan);
   }
@@ -165,7 +165,7 @@ void chan_tests() {
   assert(thrd_join(thread2, &ret) == thrd_success);
   assert(ret == 42);
 
-  printf("chan: %" PRIu64 "ns\n", c7_timer_nsecs(&t));
+  printf("chan: %" PRIu64 "us\n", c7_timer_usecs(&t));
   c7_chan_deinit(&chan);
   c7_dqpool_deinit(&pool);
 }

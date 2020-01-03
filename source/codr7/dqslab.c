@@ -20,7 +20,7 @@ void *c7_dqslab_get(struct c7_dqslab *slab, struct c7_dqpool *pool, uint16_t i) 
   return slab->items + i * pool->item_size;
 }
 
-uint16_t c7_dqslab_count(struct c7_dqslab *slab) {
+uint16_t c7_dqslab_count(const struct c7_dqslab *slab) {
   return slab->back - slab->front;
 }
 

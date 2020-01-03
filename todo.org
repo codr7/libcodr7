@@ -1,6 +1,1 @@
 * make c7_rbtree_while iterative like clear
-* c7_chsink
-** cond, mutex & chan fields
-** c7_chan.get_sink
-** c7_chan.sinks deque
-*** pop, lock, set chan & signal in chan_put

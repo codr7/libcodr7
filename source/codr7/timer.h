@@ -9,6 +9,7 @@ struct c7_timer {
 };
 
 void c7_timer_reset(struct c7_timer *timer);
-uint64_t c7_timer_nsecs(struct c7_timer *timer);
+uint64_t c7_timer_nsecs(const struct c7_timer *timer);
+uint64_t c7_timer_usecs(const struct c7_timer *timer);
 
 #endif

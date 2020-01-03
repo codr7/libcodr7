@@ -15,7 +15,7 @@ func main() {
      t := time.Now()
 
      go func() {
-     	for i := uint64(0); i < 1024; i++ {
+     	for i := uint64(0); i < 1000000; i++ {
 	    c<- i
 	}
 
@@ -23,7 +23,7 @@ func main() {
      }()
 
      go func() {
-     	for i := uint64(0); i < 1024; i++ {
+     	for i := uint64(0); i < 1000000; i++ {
 	    if (i != <-c) {
 	       panic("Wrong number")
 	    }
@@ -33,5 +33,5 @@ func main() {
      }()
 
      w.Wait()
-     fmt.Printf("%vns\n", time.Since(t).Nanoseconds());
+     fmt.Printf("%vns\n", time.Since(t).Microseconds());
 }

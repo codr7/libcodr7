@@ -25,7 +25,7 @@ struct c7_dqslab *c7_dqslab_new(struct c7_dqpool *pool);
 struct c7_dqslab *c7_dqslab_init(struct c7_dqslab *slab);
 
 void *c7_dqslab_get(struct c7_dqslab *slab, struct c7_dqpool *pool, uint16_t i);
-uint16_t c7_dqslab_count(struct c7_dqslab *slab);
+uint16_t c7_dqslab_count(const struct c7_dqslab *slab);
 
 void *c7_dqslab_front(struct c7_dqslab *slab, struct c7_dqpool *pool);
 void *c7_dqslab_push_front(struct c7_dqslab *slab, struct c7_dqpool *pool);
