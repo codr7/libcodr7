@@ -118,10 +118,9 @@ void *c7_chan_get_lock(struct c7_chan *chan, const struct timespec *deadline) {
 
 void c7_chan_get_unlock(struct c7_chan *chan) {
   c7_deque_pop_front(&chan->queue);
+  bool signal_get = chan->queue.count < chan->queue_max;
   int result = thrd_error;
 
-  bool signal_get = chan->queue.count < chan->queue_max;
-  
   if ((result = mtx_unlock(&chan->mutex)) != thrd_success) {
     c7_error("Failed unlocking mutex: %d", result);
   }

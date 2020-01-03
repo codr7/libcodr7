@@ -1,7 +1,6 @@
-* add fast path using atomic spinlock to c7_chan
+* make c7_rbtree_while iterative like clear
 * add c7_chsink
 ** cond, mutex & chan fields
 ** add c7_chan.get_sink
 ** add c7_chan.sinks deque
 *** pop, lock, set chan & signal in chan_put
-* make c7_rbtree_while iterative like clear
