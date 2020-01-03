@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "codr7/chan.h"
 #include "codr7/error.h"
 
@@ -20,11 +22,28 @@ void c7_chan_deinit(struct c7_chan *chan) {
   c7_deque_clear(&chan->queue);
 }
 
-void *c7_chan_put_lock(struct c7_chan *chan) {
+static bool lock(mtx_t *mutex, const struct timespec *deadline) {
   int result = thrd_error;
 
-  if ((result = mtx_lock(&chan->mutex)) != thrd_success) {
+  if (deadline) {
+    switch((result = mtx_timedlock(mutex, deadline))) {
+    case thrd_success:
+      break;
+    case thrd_timedout:
+      return false;
+    default:
+      c7_error("Failed locking mutex: %d", result);
+    }
+  } else if ((result = mtx_lock(mutex)) != thrd_success) {
     c7_error("Failed locking mutex: %d", result);
+  }
+
+  return true;
+}
+
+void *c7_chan_put_lock(struct c7_chan *chan, const struct timespec *deadline) {
+  if (!lock(&chan->mutex, deadline)) {
+    return NULL;
   }
 
   return c7_deque_push_back(&chan->queue);
@@ -42,15 +61,28 @@ void c7_chan_put_unlock(struct c7_chan *chan) {
   }
 }
 
-void *c7_chan_get_lock(struct c7_chan *chan) {
-  int result = thrd_error;
-
-  if ((result = mtx_lock(&chan->mutex)) != thrd_success) {
-    c7_error("Failed locking mutex: %d", result);
+void *c7_chan_get_lock(struct c7_chan *chan, const struct timespec *deadline) {
+  if (!lock(&chan->mutex, deadline)) {
+    return NULL;
   }
-
+  
   if (!chan->queue.count) {
-    if ((result = cnd_wait(&chan->cond, &chan->mutex)) != thrd_success) {
+    int result = thrd_error;
+
+    if (deadline) {
+      switch ((result = cnd_timedwait(&chan->cond, &chan->mutex, deadline))) {
+      case thrd_success:
+	break;
+      case thrd_timedout:
+	if ((result = mtx_unlock(&chan->mutex)) != thrd_success) {
+	  c7_error("Failed unlocking mutex: %d", result);
+	}
+	
+	return NULL;
+      default:
+	c7_error("Failed waiting on cond: %d", result);
+      }
+    } else if ((result = cnd_wait(&chan->cond, &chan->mutex)) != thrd_success) {
       c7_error("Failed waiting on cond: %d", result);
     }
   }

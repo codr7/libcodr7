@@ -1,5 +1,7 @@
+* add c7_chan.queue_size
+** -1 unlimited
+** reuse cond
 * add bench/chan.go
-* add optional timeout to c7_chan_get_lock
 * add fast path using atomic spinlock to c7_chan
 * add c7_chsink
 ** add c7_chan.sink
