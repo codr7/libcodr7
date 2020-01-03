@@ -142,13 +142,13 @@ static int chan_fn2(void *_chan) {
 }
 
 void chan_tests() {
-  const int SLAB_SIZE = 32;
-
+  const int SLAB_SIZE = 32, QUEUE_MAX = 64;
+  
   struct c7_dqpool pool;
   c7_dqpool_init(&pool, SLAB_SIZE, sizeof(int));
 
   struct c7_chan chan;
-  c7_chan_init(&chan, &pool);
+  c7_chan_init(&chan, &pool, QUEUE_MAX);
 
   struct c7_timer t;
   c7_timer_reset(&t);

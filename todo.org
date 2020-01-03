@@ -1,8 +1,8 @@
-* add c7_chan.queue_size
-** -1 unlimited
-** reuse cond
 * add bench/chan.go
 * add fast path using atomic spinlock to c7_chan
 * add c7_chsink
-** add c7_chan.sink
+** cond, mutex & chan fields
+** add c7_chan.get_sink
+** add c7_chan.sinks deque
+*** pop, lock, set chan & signal in chan_put
 * make c7_rbtree_while iterative like clear
