@@ -1,4 +1,7 @@
+* fix chan bench
+* add Go bench
 * add optional timeout to c7_chan_get_lock
-* convert chan test to benchmark
 * add fast path using atomic spinlock to c7_chan
+* add c7_chsink
+** add c7_chan.sink
 * make c7_rbtree_while iterative like clear

@@ -1,11 +1,13 @@
 #include <assert.h>
 #include <stdio.h>
+
 #include "codr7/chan.h"
 #include "codr7/deque.h"
 #include "codr7/dqpool.h"
 #include "codr7/rbnode.h"
 #include "codr7/rbpool.h"
 #include "codr7/rbtree.h"
+#include "codr7/timer.h"
 
 static void deque_tests() {
   const int SLAB_SIZE = 32, N = 1024;
@@ -119,46 +121,56 @@ static void rbtree_tests() {
 
 static int chan_fn1(void *_chan) {
   struct c7_chan *chan = _chan;
-  *(int *)c7_chan_put_lock(chan) = 42;
-  c7_chan_put_unlock(chan);
-  int v = *(int *)c7_chan_get_lock(chan);
-  c7_chan_get_unlock(chan);
-  return v;
+
+  for (int i = 0; i < 1024; i++) {
+    *(int *)c7_chan_put_lock(chan) = i;
+    c7_chan_put_unlock(chan);
+  }
+  
+  return 42;
 }
 	    
 static int chan_fn2(void *_chan) {
   struct c7_chan *chan = _chan;
-  int v = *(int *)c7_chan_get_lock(chan);
-  c7_chan_get_unlock(chan);
-  *(int *)c7_chan_put_lock(chan) = v;
-  c7_chan_put_unlock(chan);
-  return v;
+
+  for (int i = 0; i < 1024; i++) {
+    assert(*(int *)c7_chan_get_lock(chan) == i);
+    c7_chan_get_unlock(chan);
+  }
+  
+  return 42;
 }
 
 void chan_tests() {
   const int SLAB_SIZE = 32;
+
   struct c7_dqpool pool;
   c7_dqpool_init(&pool, SLAB_SIZE, sizeof(int));
+
   struct c7_chan chan;
   c7_chan_init(&chan, &pool);
 
+  struct c7_timer t;
+  c7_timer_reset(&t);
+  
   thrd_t thread1, thread2;
   assert(thrd_create(&thread1, chan_fn1, &chan) == thrd_success);
   assert(thrd_create(&thread2, chan_fn2, &chan) == thrd_success);
 
   int ret = 0;
-  assert(thrd_join(thread2, &ret) == thrd_success);
-  assert(ret == 42);
-
-  ret = 0;
   assert(thrd_join(thread1, &ret) == thrd_success);
   assert(ret == 42);
 
+  ret = 0;
+  assert(thrd_join(thread2, &ret) == thrd_success);
+  assert(ret == 42);
+
+  printf("chan: %" PRIu64 "ns\n", c7_timer_nsecs(&t));
   c7_chan_deinit(&chan);
   c7_dqpool_deinit(&pool);
 }
 
-int main() {
+int main() {  
   deque_tests();
   rbtree_tests();
   chan_tests();
