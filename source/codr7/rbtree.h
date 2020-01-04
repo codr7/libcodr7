@@ -1,6 +1,8 @@
 #ifndef C7_RBTREE_H
 #define C7_RBTREE_H
 
+#include <stdint.h>
+
 #include "codr7/compare.h"
 
 struct c7_rbnode;

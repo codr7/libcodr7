@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-     const QUEUE_MAX = 64
+     const QUEUE_MAX = 100
      c := make(chan uint64, QUEUE_MAX)
      var w sync.WaitGroup
      w.Add(2);
@@ -15,7 +15,7 @@ func main() {
      t := time.Now()
 
      go func() {
-     	for i := uint64(0); i < 1000000; i++ {
+     	for i := uint64(0); i < 10000000; i++ {
 	    c<- i
 	}
 
@@ -23,10 +23,8 @@ func main() {
      }()
 
      go func() {
-     	for i := uint64(0); i < 1000000; i++ {
-	    if (i != <-c) {
-	       panic("Wrong number")
-	    }
+     	for i := uint64(0); i < 10000000; i++ {
+	    <-c
 	}
 
 	w.Done()
