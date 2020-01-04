@@ -4,12 +4,12 @@
 #include "codr7/dqslab.h"
 #include "codr7/list.h"
 
-#define _c7_deque_do(d, i, _slab)					\
-  c7_list_do(&(d)->slabs, _slab)					\
-  c7_dqslab_do(c7_baseof(_slab, struct c7_dqslab, list), (d)->pool, i)
+#define _c7_deque_do(deque, i, _slab)					\
+  c7_list_do(&(deque)->slabs, _slab)					\
+  c7_dqslab_do(c7_baseof(_slab, struct c7_dqslab, list), (deque)->pool, i)
 
-#define c7_deque_do(l, i)			\
-  _c7_deque_do(l, i, c7_unique(slab))
+#define c7_deque_do(deque, i)			\
+  _c7_deque_do(deque, i, c7_unique(slab))
 
 struct c7_deque {
   struct c7_dqpool *pool;

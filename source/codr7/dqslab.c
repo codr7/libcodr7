@@ -8,6 +8,7 @@
 
 struct c7_dqslab *c7_dqslab_new(struct c7_dqpool *pool) {
   return c7_dqslab_init(malloc(sizeof(struct c7_dqslab) +
+			       c7_align(0, pool->item_size) +
 			       pool->slab_size * pool->item_size));
 }
 
@@ -17,7 +18,7 @@ struct c7_dqslab *c7_dqslab_init(struct c7_dqslab *slab) {
 }
 
 void *c7_dqslab_get(struct c7_dqslab *slab, struct c7_dqpool *pool, uint16_t i) {
-  return slab->items + i * pool->item_size;
+  return c7_align(slab->items, pool->item_size) + i * pool->item_size;
 }
 
 uint16_t c7_dqslab_count(const struct c7_dqslab *slab) {

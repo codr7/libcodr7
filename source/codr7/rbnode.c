@@ -30,7 +30,7 @@ void c7_rbnode_deinit(struct c7_rbnode *node, struct c7_rbtree *tree) {
   }
 }
 
-uint8_t *c7_rbnode_value(struct c7_rbnode *node) {
+static uint8_t *get(struct c7_rbnode *node) {
   return c7_align(node->value, _Alignof(max_align_t));
 }
 
@@ -38,7 +38,7 @@ void *c7_rbnode_find(struct c7_rbnode *node,
 		     struct c7_rbtree *tree,
 		     const void *key) {
   while (node) {
-    switch (tree->compare(key, c7_rbnode_value(node))) {
+    switch (tree->compare(key, get(node))) {
     case C7_LT:
       node = node->left;
       break;
@@ -46,7 +46,7 @@ void *c7_rbnode_find(struct c7_rbnode *node,
       node = node->right;
       break;
     default:
-      return c7_rbnode_value(node);
+      return get(node);
     }
   }
 
@@ -103,12 +103,12 @@ struct c7_rbnode *c7_rbnode_add(struct c7_rbnode *node,
 				void **value) {
   if (!node) {
     node = c7_rbpool_get(tree->pool);
-    *value = c7_rbnode_value(node);
+    *value = get(node);
     tree->count++;
     return node;
   }
   
-  switch (tree->compare(key, c7_rbnode_value(node))) {
+  switch (tree->compare(key, get(node))) {
   case C7_LT:
     node->left = c7_rbnode_add(node->left, tree, key, value);
     break;
@@ -153,7 +153,7 @@ struct c7_rbnode *c7_rbnode_remove(struct c7_rbnode *node,
 				   struct c7_rbtree *tree,
 				   const void *key,
 				   void **value) {
-  if (tree->compare(key, c7_rbnode_value(node)) == C7_LT) {
+  if (tree->compare(key, get(node)) == C7_LT) {
     if (!red(node->left) && !red(node->left->left)) {
       node = move_red_left(node);
     }
@@ -164,8 +164,8 @@ struct c7_rbnode *c7_rbnode_remove(struct c7_rbnode *node,
       node = rotr(node);
     }
 
-    if (tree->compare(key, c7_rbnode_value(node)) == C7_EQ && !node->right) {
-      *value = c7_rbnode_value(node);
+    if (tree->compare(key, get(node)) == C7_EQ && !node->right) {
+      *value = get(node);
       c7_rbpool_put(tree->pool, node);
       tree->count--;
       return NULL;
@@ -180,8 +180,8 @@ struct c7_rbnode *c7_rbnode_remove(struct c7_rbnode *node,
       }
     }
 
-    if (tree->compare(key, c7_rbnode_value(node)) == C7_EQ) {
-      *value = c7_rbnode_value(node);
+    if (tree->compare(key, get(node)) == C7_EQ) {
+      *value = get(node);
       c7_rbpool_put(tree->pool, node);
       struct c7_rbnode *l = node->left, *r = remove_min(node->right, &node);
       node->left = l;
@@ -195,10 +195,12 @@ struct c7_rbnode *c7_rbnode_remove(struct c7_rbnode *node,
   return fix(node);
 }
 
-bool c7_rbnode_while(struct c7_rbnode *node, c7_predicate_t fn, void *arg) {
+bool c7_rbnode_while(struct c7_rbnode *node,
+		     struct c7_rbtree *tree,
+		     c7_predicate_t fn, void *arg) {
   return node
-    ? c7_rbnode_while(node->left, fn, arg) &&
-    fn(c7_rbnode_value(node), arg) &&
-    c7_rbnode_while(node->right, fn, arg)
+    ? c7_rbnode_while(node->left, tree, fn, arg) &&
+    fn(get(node), arg) &&
+    c7_rbnode_while(node->right, tree, fn, arg)
     : true;
 }

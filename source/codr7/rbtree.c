@@ -38,5 +38,5 @@ void *c7_rbtree_remove(struct c7_rbtree *tree, const void *key) {
 }
 
 bool c7_rbtree_while(struct c7_rbtree *tree, c7_predicate_t fn, void *arg) {
-  return c7_rbnode_while(tree->root, fn, arg);
+  return c7_rbnode_while(tree->root, tree, fn, arg);
 }

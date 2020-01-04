@@ -34,6 +34,8 @@ struct c7_rbnode *c7_rbnode_remove(struct c7_rbnode *node,
 				   const void *key,
 				   void **value);
 
-bool c7_rbnode_while(struct c7_rbnode *node, c7_predicate_t fn, void *arg);
+bool c7_rbnode_while(struct c7_rbnode *node,
+		     struct c7_rbtree *tree,
+		     c7_predicate_t fn, void *arg);
 
 #endif

@@ -4,14 +4,16 @@
 #include <stdint.h>
 #include "codr7/list.h"
 
-#define _c7_dqslab_do(b, p, i, _back)				\
-  for (void *i = (b)->items + (b)->front * (p)->item_size,	\
-	 *_back = (b)->items + (b)->back * (p)->item_size;	\
-       i < _back;						\
-       i = (uint8_t *)i + (p)->item_size)
+#define _c7_dqslab_do(slab, pool, i, _back)				\
+  for (void *i = c7_align((slab)->items, (pool)->item_size) +		\
+	 (slab)->front * (pool)->item_size,				\
+	 *_back = (uint8_t *)i +					\
+	 c7_dqslab_count(slab) * (pool->item_size);			\
+       i < _back;							\
+       i = (uint8_t *)i + (pool)->item_size)
 
-#define c7_dqslab_do(b, p, i)			\
-  _c7_dqslab_do(b, p, i, c7_unique(back))
+#define c7_dqslab_do(slab, pool, i)		\
+  _c7_dqslab_do(slab, pool, i, c7_unique(back))
 
 struct c7_dqpool;
 
