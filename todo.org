@@ -1,1 +1,2 @@
+* add c7_rbtree_clone
 * make c7_rbtree_while iterative like clear

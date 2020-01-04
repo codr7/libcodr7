@@ -4,7 +4,10 @@
 #include "codr7/error.h"
 
 void c7_chan_init(struct c7_chan *chan, uint16_t item_size, uint64_t queue_max) {
-  c7_dqpool_init(&chan->queue_pool, C7_CHAN_SLAB_SIZE, item_size);
+  c7_dqpool_init(&chan->queue_pool,
+		 queue_max ? queue_max : C7_CHAN_SLAB_SIZE,
+		 item_size);
+  
   c7_deque_init(&chan->queue, &chan->queue_pool);
   chan->queue_max = queue_max;
   int result = thrd_error;
