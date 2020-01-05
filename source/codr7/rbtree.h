@@ -9,17 +9,17 @@
   struct c7_list _stack;						\
   c7_list_init(&_stack);						\
   if ((tree)->root) {							\
-    c7_rbnode_push((tree)->root, &_stack);					\
+    c7_rbnode_push((tree)->root, &_stack);				\
   }									\
   struct c7_rbnode *_node = c7_baseof(c7_list_pop_front(&_stack),	\
 				      struct c7_rbnode,			\
 				      list);				\
-  for (void *var =  _node ? c7_rbnode_value(_node) : NULL;		\
+  for (void *var =  _node ? c7_rbnode_value(_node, tree) : NULL;	\
        var;								\
        _node = c7_baseof(c7_list_pop_front(&_stack),			\
 			 struct c7_rbnode,				\
 			 list),						\
-	 var = _node ? c7_rbnode_value(_node) : NULL)
+	 var = _node ? c7_rbnode_value(_node, tree) : NULL)
 
 #define c7_rbtree_do(tree, var)					\
   _c7_rbtree_do(tree, var, c7_unique(stack), c7_unique(node))

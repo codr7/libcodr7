@@ -5,7 +5,7 @@
 #include "codr7/list.h"
 
 struct c7_rbpool {
-  uint16_t slab_size, node_size;
+  uint16_t slab_size, value_size, node_size;
   struct c7_list slabs, nodes;
 };
 
