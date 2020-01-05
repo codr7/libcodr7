@@ -3,13 +3,16 @@
 
 #include <stddef.h>
 
-#define c7_align(base, _size) ({					\
-      __auto_type size = c7_min((_size), _Alignof(max_align_t));	\
-      (base) + size - ((ptrdiff_t)(base)) % size;			\
+#define c7_align(base, size) ({						\
+      __auto_type _base = base;						\
+      __auto_type _size = c7_min((size), _Alignof(max_align_t));	\
+      (_base) + _size - ((ptrdiff_t)(_base)) % _size;			\
     })									\
 
-#define c7_baseof(p, t, m)			\
-  ((t *)((char *)(p) - offsetof(t, m)))
+#define c7_baseof(p, t, m) ({			\
+      uint8_t *_p = (uint8_t *)p;		\
+      _p ? ((t *)(_p - offsetof(t, m))) : NULL;	\
+    })
 
 #define _c7_id(x, y)				\
   x##y

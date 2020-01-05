@@ -1,5 +1,2 @@
 * use c7_align in rb
-* c7_rbtree_do
-** use stack like clear
-** or fix c7_rbtree_while
 * add c7_rbtree_clone

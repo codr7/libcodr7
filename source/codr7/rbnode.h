@@ -19,6 +19,7 @@ struct c7_rbnode *c7_rbnode_init(struct c7_rbnode *node);
 void c7_rbnode_deinit(struct c7_rbnode *node, struct c7_rbtree *tree);
 
 uint8_t *c7_rbnode_value(struct c7_rbnode *node);
+void c7_rbnode_push(struct c7_rbnode *node, struct c7_list *list);
 
 void *c7_rbnode_find(struct c7_rbnode *node,
 		     struct c7_rbtree *tree,
@@ -33,9 +34,5 @@ struct c7_rbnode *c7_rbnode_remove(struct c7_rbnode *node,
 				   struct c7_rbtree *tree,
 				   const void *key,
 				   void **value);
-
-bool c7_rbnode_while(struct c7_rbnode *node,
-		     struct c7_rbtree *tree,
-		     c7_predicate_t fn, void *arg);
 
 #endif

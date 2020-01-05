@@ -62,10 +62,11 @@ static void deque_tests() {
   c7_dqpool_deinit(&pool);
 }
 
+/*
 static bool fn(void *value, void *expected) {
   assert(*(int *)value == (*(int *)expected)++);
   return true;
-}
+  }*/
 
 static void rbtree_tests() {
   const int SLAB_SIZE = 32, N = 10;
@@ -96,7 +97,11 @@ static void rbtree_tests() {
 
   // Loop
   int i = 0;
-  assert(c7_rbtree_while(&tree, fn, &i));
+
+  c7_rbtree_do(&tree, p) {
+    assert(*(int *)p == i++);
+  }
+
   assert(i == N);
 
   // Remove first half

@@ -19,4 +19,10 @@ void c7_list_init(struct c7_list *list);
 void c7_list_insert(struct c7_list *list, struct c7_list *item);
 struct c7_list *c7_list_remove(struct c7_list *list);
 
+void c7_list_push_front(struct c7_list *list, struct c7_list *item);
+struct c7_list *c7_list_pop_front(struct c7_list *list);
+
+void c7_list_push_back(struct c7_list *list, struct c7_list *item);
+struct c7_list *c7_list_pop_back(struct c7_list *list);
+
 #endif
