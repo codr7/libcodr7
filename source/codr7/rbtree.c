@@ -1,5 +1,5 @@
 #include <stddef.h>
-#include "codr7/rbnode.h"
+
 #include "codr7/rbtree.h"
 
 void c7_rbtree_init(struct c7_rbtree *tree, 

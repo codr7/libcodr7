@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "codr7/compare.h"
+#include "codr7/rbnode.h"
 
 #define _c7_rbtree_do(tree, var, _stack, _node)				\
   struct c7_list _stack;						\

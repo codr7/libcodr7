@@ -7,14 +7,11 @@ enum c7_order c7_compare_int(const void *x, const void *y) {
 }
 
 enum c7_order c7_compare_str(const void *x, const void *y) {
-  switch(strcmp(x, y)) {
-  case -1:
-    return C7_LT;
-  case 1:
-    return C7_GT;
-  default:
-    break;
-  }
+  int v = strcmp(x, y);
 
-  return C7_EQ;
+  if (v < 0) {
+    return C7_LT;
+  }
+  
+  return (v > 0) ? C7_GT : C7_EQ;
 }
