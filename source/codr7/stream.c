@@ -40,21 +40,25 @@ void c7_stream_putc(struct c7_stream *stream, char c) {
 }
 
 char *c7_stream_getline(struct c7_stream *stream, FILE *in) {
-  char *start = stream->data ? stream->data + stream->length : NULL;
+  uint64_t start = stream->length;
 
   for (;;) {
     char c = fgetc(in);
 
-    if (ferror(in)) {
-      c7_error("Failed reading char: %d", errno);
+    if (c == EOF) {
+      if (ferror(in)) {
+	c7_error("Failed reading char: %d", errno);
+      } else {
+	break;
+      }
     }
     
-    if (c == '\n' || c == EOF) {
+    c7_stream_putc(stream, c);
+
+    if (c == '\n') {
       break;
     }
-
-    c7_stream_putc(stream, c);
   }
 
-  return start ? start : stream->data;
+  return stream->data ? stream->data + start : NULL;
 }
