@@ -1,12 +1,21 @@
+#include <errno.h>
+
+#include "codr7/error.h"
 #include "codr7/timer.h"
 
 void c7_timer_reset(struct c7_timer *timer) {
-  timespec_get(&timer->start, TIME_UTC);
+  if (!timespec_get(&timer->start, TIME_UTC)) {
+    c7_error("Failed getting time: %d", errno);
+  }
 }
 
 uint64_t c7_timer_nsecs(const struct c7_timer *timer) {
   struct timespec end;
-  timespec_get(&end, TIME_UTC);
+  
+  if (!timespec_get(&end, TIME_UTC)) {
+    c7_error("Failed getting time: %d", errno);
+    return 0;
+  }
   
   return
     (end.tv_sec - timer->start.tv_sec) * 1000000000 +
