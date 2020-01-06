@@ -62,11 +62,9 @@ static void deque_tests() {
   c7_dqpool_deinit(&pool);
 }
 
-/*
-static bool fn(void *value, void *expected) {
-  assert(*(int *)value == (*(int *)expected)++);
-  return true;
-  }*/
+static enum c7_order compare_int(const void *x, const void *y) {
+  return c7_compare(*(int *)x, *(int *)y);
+}
 
 static void rbtree_tests() {
   const int SLAB_SIZE = 32, N = 10;
@@ -75,7 +73,7 @@ static void rbtree_tests() {
   c7_rbpool_init(&pool, SLAB_SIZE, sizeof(int));
   
   struct c7_rbtree tree;
-  c7_rbtree_init(&tree, c7_compare_int, &pool);
+  c7_rbtree_init(&tree, compare_int, &pool);
   int items[] = {9, 1, 2, 3, 5, 4, 6, 7, 8, 0};
 
   // Add items
