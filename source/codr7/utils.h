@@ -20,16 +20,16 @@
 #define c7_id(x, y)				\
   _c7_id(x, y)
 
-#define c7_max(_x, _y) ({			\
-      __auto_type x = (_x);			\
-      __auto_type y = (_y);			\
-      x > y ? x : y;				\
+#define c7_max(x, y) ({				\
+      __auto_type _x = x;			\
+      __auto_type _y = y;			\
+      _x > _y ? _x : _y;			\
     })						\
 
-#define c7_min(_x, _y) ({			\
-      __auto_type x = (_x);			\
-      __auto_type y = (_y);			\
-      x < y ? x : y;				\
+#define c7_min(x, y) ({				\
+      __auto_type _x = x;			\
+      __auto_type _y = y;			\
+      _x < _y ? _x : _y;			\
     })						\
 
 #define c7_unique(x)				\
