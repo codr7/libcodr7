@@ -4,9 +4,9 @@
 #include "codr7/chan.h"
 #include "codr7/deque.h"
 #include "codr7/dqpool.h"
-#include "codr7/rbnode.h"
-#include "codr7/rbpool.h"
-#include "codr7/rbtree.h"
+#include "codr7/tree_pool.h"
+#include "codr7/tree.h"
+#include "codr7/tree_node.h"
 
 static void deque_tests() {
   const int SLAB_SIZE = 32, N = 1024;
@@ -66,37 +66,37 @@ static enum c7_order compare_int(const void *x, const void *y) {
   return c7_compare(*(int *)x, *(int *)y);
 }
 
-static void rbtree_tests() {
+static void tree_tests() {
   const int SLAB_SIZE = 32, N = 10;
 
-  struct c7_rbpool pool;
-  c7_rbpool_init(&pool, SLAB_SIZE, sizeof(int));
+  struct c7_tree_pool pool;
+  c7_tree_pool_init(&pool, SLAB_SIZE, sizeof(int));
   
-  struct c7_rbtree tree;
-  c7_rbtree_init(&tree, compare_int, &pool);
+  struct c7_tree tree;
+  c7_tree_init(&tree, compare_int, &pool);
   int items[] = {9, 1, 2, 3, 5, 4, 6, 7, 8, 0};
 
   // Add items
   for (int i = 0; i < N; i++) {
-    *(int *)c7_rbtree_add(&tree, items + i) = items[i];
+    *(int *)c7_tree_add(&tree, items + i) = items[i];
   }
 
   // Try adding duplicates
   for (int i = 0; i < N; i++) {
-    assert(!c7_rbtree_add(&tree, items + i));
+    assert(!c7_tree_add(&tree, items + i));
   }
 
   assert(tree.count == N);
 
   // Find items
   for (int i = 0; i < N; i++) {
-    assert(*(int *)c7_rbtree_find(&tree, items + i) == items[i]);
+    assert(*(int *)c7_tree_find(&tree, items + i) == items[i]);
   }
 
   // Loop
   int i = 0;
 
-  c7_rbtree_do(&tree, p) {
+  c7_tree_do(&tree, p) {
     assert(*(int *)p == i++);
   }
 
@@ -104,21 +104,21 @@ static void rbtree_tests() {
 
   // Remove first half
   for (int i = 0; i < N / 2; i++) {
-    assert(*(int *)c7_rbtree_remove(&tree, items + i) == items[i]);
+    assert(*(int *)c7_tree_remove(&tree, items + i) == items[i]);
   }
 
   assert(tree.count == N / 2);
 
   // Find remaining items
   for (int i = N / 2; i < N; i++) {
-    assert(*(int *)c7_rbtree_find(&tree, items + i) == items[i]);
+    assert(*(int *)c7_tree_find(&tree, items + i) == items[i]);
   }
 
   // Clear
-  c7_rbtree_clear(&tree);
+  c7_tree_clear(&tree);
   assert(!tree.count);
   
-  c7_rbpool_deinit(&pool);
+  c7_tree_pool_deinit(&pool);
 }
 
 static int chan_fn1(void *_chan) {
@@ -166,7 +166,7 @@ void chan_tests() {
 
 int main() {  
   deque_tests();
-  rbtree_tests();
+  tree_tests();
   chan_tests();
   return 0;
 }

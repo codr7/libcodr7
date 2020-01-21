@@ -17,7 +17,7 @@ Intrusive, double linked list. Since one set of links is needed for each list, t
 ### deque ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/deque.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/deque.c))
 Deque with value semantics and pool allocated items.
 
-### rbtree ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/rbtree.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/rbtree.c))
+### tree ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/tree.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/tree.c))
 [Left leaning red/black tree](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=2ahUKEwj8zeD6593mAhUxNOwKHcKlAW0QFjABegQIBBAC&url=https%3A%2F%2Fwww.cs.princeton.edu%2F~rs%2Ftalks%2FLLRB%2FLLRB.pdf&usg=AOvVaw0aj5xOszrudCcAFIuVqngg) with value semantics and pool allocated items.
 
 ### chan ([h](https://github.com/codr7/libcodr7/blob/master/source/codr7/chan.h)/[c](https://github.com/codr7/libcodr7/blob/master/source/codr7/chan.c))
