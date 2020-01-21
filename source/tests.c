@@ -3,16 +3,16 @@
 
 #include "codr7/chan.h"
 #include "codr7/deque.h"
-#include "codr7/dqpool.h"
-#include "codr7/tree_pool.h"
+#include "codr7/deque_pool.h"
 #include "codr7/tree.h"
 #include "codr7/tree_node.h"
+#include "codr7/tree_pool.h"
 
 static void deque_tests() {
   const int SLAB_SIZE = 32, N = 1024;
 
-  struct c7_dqpool pool;
-  c7_dqpool_init(&pool, SLAB_SIZE, sizeof(int));
+  struct c7_deque_pool pool;
+  c7_deque_pool_init(&pool, SLAB_SIZE, sizeof(int));
   
   struct c7_deque deque;
   c7_deque_init(&deque, &pool);
@@ -59,7 +59,7 @@ static void deque_tests() {
   c7_deque_clear(&deque);
   assert(!deque.count);
   
-  c7_dqpool_deinit(&pool);
+  c7_deque_pool_deinit(&pool);
 }
 
 static enum c7_order compare_int(const void *x, const void *y) {

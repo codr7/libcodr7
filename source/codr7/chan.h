@@ -4,10 +4,10 @@
 #include <threads.h>
 
 #include "codr7/deque.h"
-#include "codr7/dqpool.h"
+#include "codr7/deque_pool.h"
 
 struct c7_chan {
-  struct c7_dqpool queue_pool;
+  struct c7_deque_pool queue_pool;
   struct c7_deque queue;
   uint64_t queue_max;
   
