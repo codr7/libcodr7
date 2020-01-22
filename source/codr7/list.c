@@ -4,6 +4,10 @@ void c7_list_init(struct c7_list *list) {
   list->prev = list->next = list;
 }
 
+void c7_list_fix(struct c7_list *list) {
+  list->prev->next = list->next->prev = list;
+}
+
 void c7_list_insert(struct c7_list *list, struct c7_list *item) {
   item->prev = list->prev;
   list->prev->next = item;

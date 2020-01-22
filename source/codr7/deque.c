@@ -10,8 +10,8 @@ void c7_deque_init(struct c7_deque *deque, struct c7_deque_pool *pool) {
 }
 
 void c7_deque_clear(struct c7_deque *deque) {
-  c7_list_do(&deque->slabs, b) {
-    c7_deque_pool_put(deque->pool, c7_baseof(b, struct c7_deque_slab, list));
+  c7_list_do(&deque->slabs, s) {
+    c7_deque_pool_put(deque->pool, c7_baseof(s, struct c7_deque_slab, list));
   }
 
   c7_list_init(&deque->slabs);
@@ -19,12 +19,12 @@ void c7_deque_clear(struct c7_deque *deque) {
 }
 
 void *c7_deque_get(struct c7_deque *deque, uint64_t i) {
-  c7_list_do(&deque->slabs, bl) {
-    struct c7_deque_slab *b = c7_baseof(bl, struct c7_deque_slab, list);
-    uint16_t c = c7_deque_slab_count(b);
+  c7_list_do(&deque->slabs, sl) {
+    struct c7_deque_slab *s = c7_baseof(sl, struct c7_deque_slab, list);
+    uint16_t c = c7_deque_slab_count(s);
     
     if (c > i) {
-      return c7_deque_slab_get(b, deque->pool, i);
+      return c7_deque_slab_get(s, deque->pool, i);
     }
 
     i -= c;
@@ -66,25 +66,24 @@ void *c7_deque_back(struct c7_deque *deque) {
 }
 
 void *c7_deque_push_back(struct c7_deque *deque) {
-  struct c7_list *b = deque->slabs.prev;
+  struct c7_list *s = deque->slabs.prev;
 
-  if (b == &deque->slabs ||
-      c7_baseof(b, struct c7_deque_slab, list)->back ==
-      deque->pool->slab_size) {
-    c7_list_insert(&deque->slabs, (b = &c7_deque_pool_get(deque->pool)->list));
+  if (s == &deque->slabs ||
+      c7_baseof(s, struct c7_deque_slab, list)->back == deque->pool->slab_size) {
+    c7_list_insert(&deque->slabs, (s = &c7_deque_pool_get(deque->pool)->list));
   }
 
   deque->count++;
-  return c7_deque_slab_push_back(c7_baseof(b, struct c7_deque_slab, list), deque->pool);
+  return c7_deque_slab_push_back(c7_baseof(s, struct c7_deque_slab, list), deque->pool);
 }
 
 void c7_deque_pop_back(struct c7_deque *deque) {
-  struct c7_deque_slab *b = c7_baseof(deque->slabs.prev, struct c7_deque_slab, list);
-  c7_deque_slab_pop_back(b);
+  struct c7_deque_slab *s = c7_baseof(deque->slabs.prev, struct c7_deque_slab, list);
+  c7_deque_slab_pop_back(s);
   deque->count--;
   
-  if (!c7_deque_slab_count(b)) {
-    c7_list_remove(&b->list);
-    c7_deque_pool_put(deque->pool, c7_baseof(b, struct c7_deque_slab, list));
+  if (!c7_deque_slab_count(s)) {
+    c7_list_remove(&s->list);
+    c7_deque_pool_put(deque->pool, s);
   }
 }

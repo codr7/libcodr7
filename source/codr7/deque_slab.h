@@ -4,16 +4,14 @@
 #include <stdint.h>
 #include "codr7/list.h"
 
-#define _c7_deque_slab_do(slab, pool, i, _back)			\
-  for (void *i = c7_align((slab)->items, (pool)->item_size) +	\
-	 (slab)->front * (pool)->item_size,			\
-	 *_back = (uint8_t *)i +				\
-	 c7_deque_slab_count(slab) * (pool->item_size);		\
-       i < _back;						\
+#define _c7_deque_slab_do(slab, pool, i, _end)			\
+  for (void *i = c7_deque_slab_front(slab, pool),		\
+	 *_end = c7_deque_slab_get(slab, pool, (slab)->back);	\
+       i < _end;						\
        i = (uint8_t *)i + (pool)->item_size)
 
 #define c7_deque_slab_do(slab, pool, i)			\
-  _c7_deque_slab_do(slab, pool, i, c7_unique(back))
+  _c7_deque_slab_do(slab, pool, i, c7_unique(end))
 
 struct c7_deque_pool;
 
