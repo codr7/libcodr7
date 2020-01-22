@@ -20,6 +20,8 @@ struct c7_deque {
 };
 
 void c7_deque_init(struct c7_deque *deque, struct c7_deque_pool *pool);
+void c7_deque_assign(struct c7_deque *deque, struct c7_deque *source);
+
 void c7_deque_clear(struct c7_deque *deque);
 void *c7_deque_get(struct c7_deque *deque, uint64_t i);
 

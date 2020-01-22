@@ -9,6 +9,11 @@ void c7_deque_init(struct c7_deque *deque, struct c7_deque_pool *pool) {
   deque->count = 0;
 }
 
+void c7_deque_assign(struct c7_deque *deque, struct c7_deque *source) {
+  *deque = *source;
+  c7_list_fix(&deque->slabs);
+}
+
 void c7_deque_clear(struct c7_deque *deque) {
   c7_list_do(&deque->slabs, s) {
     c7_deque_pool_put(deque->pool, c7_baseof(s, struct c7_deque_slab, list));
