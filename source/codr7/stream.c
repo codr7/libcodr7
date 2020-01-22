@@ -1,5 +1,6 @@
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "codr7/error.h"
 #include "codr7/stream.h"
@@ -33,10 +34,17 @@ void c7_stream_grow(struct c7_stream *stream, uint64_t length) {
   stream->data = realloc(stream->data, stream->capacity);
 }
 
-void c7_stream_putc(struct c7_stream *stream, char c) {
+void c7_stream_putc(struct c7_stream *stream, char value) {
   c7_stream_grow(stream, stream->length + 1);
-  stream->data[stream->length++] = c;
+  stream->data[stream->length++] = value;
   stream->data[stream->length] = 0;
+}
+
+void c7_stream_puts(struct c7_stream *stream, const char *value) {
+  size_t l = strlen(value);
+  c7_stream_grow(stream, stream->length + l);
+  strncpy(stream->data + stream->length, value, l+1);
+  stream->length += l;
 }
 
 char *c7_stream_getline(struct c7_stream *stream, FILE *in) {
